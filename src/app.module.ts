@@ -1,10 +1,15 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule } from '@nestjs/config';
+import * as connectionOptions from './ormconfig';
+import { PostsModule } from './posts/posts.module';
 
+console.log(process.env.POSTGRES_USER);
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    ConfigModule.forRoot(),
+    TypeOrmModule.forRoot(connectionOptions),
+    PostsModule,
+  ],
 })
 export class AppModule {}
